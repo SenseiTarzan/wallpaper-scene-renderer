@@ -136,6 +136,10 @@ std::shared_ptr<Image> WPTexImageParser::Parse(const std::string& name) {
     i32 _image_count = img.header.count;
     if (_image_count < 0) return nullptr;
     usize image_count = (usize)_image_count;
+    if (image_count > MAX_IMAGE_COUNT) {
+        LOG_ERROR("Too many images in WPTexImageParser: %zu", image_count);
+        return nullptr;
+    }
 
     img.slots.resize(image_count);
     for (usize i_image = 0; i_image < image_count; i_image++) {

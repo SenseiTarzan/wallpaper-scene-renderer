@@ -2,6 +2,10 @@
 #include "Interface/IImageParser.h"
 #include "Fs/VFS.h"
 
+#ifndef MAX_IMAGE_COUNT
+#define MAX_IMAGE_COUNT 10000
+#endif
+
 namespace wallpaper
 {
 
