@@ -25,6 +25,10 @@ struct SpriteFrame {
 class SpriteAnimation {
 public:
     const auto& GetAnimateFrame(double newtime) {
+		if (m_frames.empty()){
+            static SpriteFrame emptyFrame {};
+            return emptyFrame;
+        }
         if ((m_remainTime -= newtime) < 0.0f) {
             SwitchToNext();
             const auto& frame = m_frames.at((usize)m_curFrame);
@@ -33,7 +37,13 @@ public:
         const auto& frame = m_frames.at((usize)m_curFrame);
         return frame;
     }
-    const auto& GetCurFrame() const { return m_frames.at((usize)m_curFrame); }
+    const auto& GetCurFrame() const {
+        if (m_frames.empty()) {
+            static SpriteFrame emptyFrame {};
+            return emptyFrame;
+        }
+        return m_frames.at((usize)m_curFrame); 
+    }
     void        AppendFrame(const SpriteFrame& frame) { m_frames.push_back(frame); }
 
     usize numFrames() const { return m_frames.size(); }
